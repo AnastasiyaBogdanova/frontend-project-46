@@ -1,0 +1,37 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/AnastasiyaBogdanova/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AnastasiyaBogdanova/frontend-project-46/actions)",
+  "homepage": "https://github.com/AnastasiyaBogdanova/frontend-project-46#readme",
+  "bugs": {
+    "url": "https://github.com/AnastasiyaBogdanova/frontend-project-46/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnastasiyaBogdanova/frontend-project-46.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint .",
+    "coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "lodash": "^4.18.1"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.4.1",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "jest": "^30.4.2"
+  }
+}
