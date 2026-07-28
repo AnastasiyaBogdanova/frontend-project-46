@@ -3,3 +3,5 @@
 [![Actions Status](https://github.com/AnastasiyaBogdanova/frontend-project-46/actions/workflows/nodejs.yml/badge.svg)](https://github.com/AnastasiyaBogdanova/frontend-project-46/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/your-badge-id/maintainability)](https://codeclimate.com/github/AnastasiyaBogdanova/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/your-badge-id/test_coverage)](https://codeclimate.com/github/AnastasiyaBogdanova/frontend-project-46/test_coverage)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AnastasiyaBogdanova_frontend-project-46&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AnastasiyaBogdanova_frontend-project-46)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=AnastasiyaBogdanova_frontend-project-46&metric=coverage)](https://sonarcloud.io/summary/new_code?id=AnastasiyaBogdanova_frontend-project-46)
