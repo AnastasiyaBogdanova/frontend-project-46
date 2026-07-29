@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import parseFile from './parsers.js';
-import stylish from './formatters/stylish.js';
+import formatDiff from './formatters/index.js';
 
-export default function genDiff(filepath1, filepath2) {
+export default function genDiff(filepath1, filepath2, formatName = 'stylish') {
   const data1 = parseFile(filepath1);
   const data2 = parseFile(filepath2);
 
   const diff = buildDiff(data1, data2);
 
-  return stylish(diff);
+  return formatDiff(diff, formatName);
 }
 
 function buildDiff(obj1, obj2) {
@@ -27,7 +27,6 @@ function buildDiff(obj1, obj2) {
     if (!hasKey2) {
       return { key, type: 'removed', value: value1 };
     }
-    // ВАЖНО: проверяем, что оба значения - объекты и не null
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return { key, type: 'nested', children: buildDiff(value1, value2) };
     }
