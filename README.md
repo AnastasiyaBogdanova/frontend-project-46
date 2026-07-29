@@ -5,3 +5,6 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/your-badge-id/test_coverage)](https://codeclimate.com/github/AnastasiyaBogdanova/frontend-project-46/test_coverage)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AnastasiyaBogdanova_frontend-project-46&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AnastasiyaBogdanova_frontend-project-46)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=AnastasiyaBogdanova_frontend-project-46&metric=coverage)](https://sonarcloud.io/summary/new_code?id=AnastasiyaBogdanova_frontend-project-46)
+[![asciicast](https://asciinema.org/a/ILMwAnidwYlSeF5E.svg)](https://asciinema.org/a/ILMwAnidwYlSeF5E)
+[![asciicast](https://asciinema.org/a/mdyn0kQlmwxxOB9V.svg)](https://asciinema.org/a/mdyn0kQlmwxxOB9V)
+[![asciicast](https://asciinema.org/a/mCFtbExnJKu81YEo.svg)](https://asciinema.org/a/mCFtbExnJKu81YEo)

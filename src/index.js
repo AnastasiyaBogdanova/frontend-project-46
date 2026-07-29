@@ -1,30 +1,39 @@
 import _ from 'lodash';
 import parseFile from './parsers.js';
+import stylish from './formatters/stylish.js';
 
-export default function genDiff(filepath1, filepath2) {
+export default function genDiff(filepath1, filepath2, format = 'stylish') {
   const data1 = parseFile(filepath1);
   const data2 = parseFile(filepath2);
 
-  const allKeys = _.union(Object.keys(data1), Object.keys(data2));
-  const sortedKeys = _.sortBy(allKeys);
+  const diff = buildDiff(data1, data2);
 
-  const result = sortedKeys.map((key) => {
-    const hasKey1 = Object.hasOwn(data1, key);
-    const hasKey2 = Object.hasOwn(data2, key);
-    const value1 = data1[key];
-    const value2 = data2[key];
+  return stylish(diff);
+}
+
+function buildDiff(obj1, obj2) {
+  const keys = _.union(Object.keys(obj1), Object.keys(obj2));
+  const sortedKeys = _.sortBy(keys);
+
+  return sortedKeys.map((key) => {
+    const hasKey1 = Object.hasOwn(obj1, key);
+    const hasKey2 = Object.hasOwn(obj2, key);
+    const value1 = obj1[key];
+    const value2 = obj2[key];
 
     if (!hasKey1) {
-      return `  + ${key}: ${value2}`; // два пробела перед плюсом
+      return { key, type: 'added', value: value2 };
     }
     if (!hasKey2) {
-      return `  - ${key}: ${value1}`; // два пробела перед минусом
+      return { key, type: 'removed', value: value1 };
+    }
+    // ВАЖНО: проверяем, что оба значения - объекты и не null
+    if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
+      return { key, type: 'nested', children: buildDiff(value1, value2) };
     }
     if (value1 === value2) {
-      return `    ${key}: ${value1}`; // четыре пробела перед ключом
+      return { key, type: 'unchanged', value: value1 };
     }
-    return `  - ${key}: ${value1}\n  + ${key}: ${value2}`; // два пробела перед плюсом/минусом
+    return { key, type: 'changed', oldValue: value1, newValue: value2 };
   });
-
-  return `{\n${result.join('\n')}\n}`;
 }
