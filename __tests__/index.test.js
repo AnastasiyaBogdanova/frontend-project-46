@@ -40,4 +40,24 @@ describe('gendiff', () => {
     const normalize = (str) => str.split('\n').filter(line => line !== '').map(line => line.trim());
     expect(normalize(result)).toEqual(normalize(expected));
   });
+
+  test('json format for nested json', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+    const expected = readFile('expected_json.txt');
+    const result = genDiff(filepath1, filepath2, 'json');
+
+    const normalize = (str) => str.replace(/\s+/g, ' ').trim();
+    expect(normalize(result)).toEqual(normalize(expected));
+  });
+
+  test('json format for nested yaml', () => {
+    const filepath1 = getFixturePath('file1.yml');
+    const filepath2 = getFixturePath('file2.yml');
+    const expected = readFile('expected_json.txt');
+    const result = genDiff(filepath1, filepath2, 'json');
+
+    const normalize = (str) => str.replace(/\s+/g, ' ').trim();
+    expect(normalize(result)).toEqual(normalize(expected));
+  });
 });
