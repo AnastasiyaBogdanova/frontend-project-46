@@ -9,7 +9,7 @@ const stringify = (value, depth) => {
     return String(value);
   }
 
-  const indent = getIndent(depth);
+  const indent = getIndent(depth + 1);
   const lines = Object.entries(value).map(([key, val]) => {
     const formattedVal = _.isPlainObject(val) ? stringify(val, depth + 1) : val;
     return `${indent}    ${key}: ${formattedVal}`;
@@ -28,23 +28,23 @@ export default function stylish(diff, depth = 0) {
     }
 
     if (type === 'added') {
-      const value = stringify(node.value, depth + 1);
+      const value = stringify(node.value, depth);
       return `${indent}  + ${key}: ${value}`;
     }
 
     if (type === 'removed') {
-      const value = stringify(node.value, depth + 1);
+      const value = stringify(node.value, depth);
       return `${indent}  - ${key}: ${value}`;
     }
 
     if (type === 'changed') {
-      const oldValue = stringify(node.oldValue, depth + 1);
-      const newValue = stringify(node.newValue, depth + 1);
+      const oldValue = stringify(node.oldValue, depth);
+      const newValue = stringify(node.newValue, depth);
       return `${indent}  - ${key}: ${oldValue}\n${indent}  + ${key}: ${newValue}`;
     }
 
     // unchanged
-    const value = stringify(node.value, depth + 1);
+    const value = stringify(node.value, depth);
     return `${indent}    ${key}: ${value}`;
   });
 
