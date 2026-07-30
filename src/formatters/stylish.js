@@ -5,6 +5,7 @@ const getIndent = (depth) => ' '.repeat(depth * 4);
 const stringify = (value, depth) => {
   if (!_.isPlainObject(value)) {
     if (value === null) return 'null';
+    if (typeof value === 'string') return value;
     return String(value);
   }
 
@@ -27,13 +28,11 @@ export default function stylish(diff, depth = 0) {
     }
 
     if (type === 'added') {
-      const value = stringify(node.value, depth + 1);
-      return `${indent}  + ${key}: ${value}`;
+      return `${indent}  + ${key}: ${stringify(node.value, depth + 1)}`;
     }
 
     if (type === 'removed') {
-      const value = stringify(node.value, depth + 1);
-      return `${indent}  - ${key}: ${value}`;
+      return `${indent}  - ${key}: ${stringify(node.value, depth + 1)}`;
     }
 
     if (type === 'changed') {
@@ -42,8 +41,8 @@ export default function stylish(diff, depth = 0) {
       return `${indent}  - ${key}: ${oldValue}\n${indent}  + ${key}: ${newValue}`;
     }
 
-    const value = stringify(node.value, depth + 1);
-    return `${indent}    ${key}: ${value}`;
+    // unchanged
+    return `${indent}    ${key}: ${stringify(node.value, depth + 1)}`;
   });
 
   return `{\n${lines.join('\n')}\n${indent}}`;

@@ -23,16 +23,12 @@ export default function plain(diff, parentPath = '') {
       switch (node.type) {
         case 'added':
           return `Property '${fullPath}' was added with value: ${formatValue(node.value)}`;
-
         case 'removed':
           return `Property '${fullPath}' was removed`;
-
         case 'changed':
           return `Property '${fullPath}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
-
         case 'nested':
           return plain(node.children, fullPath);
-
         default:
           return null;
       }
