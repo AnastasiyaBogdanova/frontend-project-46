@@ -33,19 +33,19 @@ const renderLines = (diff, depth) => {
     }
 
     if (type === 'added') {
-      return `${indent}  + ${key}: ${formatValue(node.value, depth)}`;
+      return `${indent}  + ${key}: ${formatValue(node.value, depth + 1)}`;
     }
 
     if (type === 'removed') {
-      return `${indent}  - ${key}: ${formatValue(node.value, depth)}`;
+      return `${indent}  - ${key}: ${formatValue(node.value, depth + 1)}`;
     }
 
     if (type === 'changed') {
-      return `${indent}  - ${key}: ${formatValue(node.oldValue, depth)}\n${indent}  + ${key}: ${formatValue(node.newValue, depth)}`;
+      return `${indent}  - ${key}: ${formatValue(node.oldValue, depth + 1)}\n${indent}  + ${key}: ${formatValue(node.newValue, depth + 1)}`;
     }
 
     // unchanged
-    return `${indent}    ${key}: ${formatValue(node.value, depth)}`;
+    return `${indent}    ${key}: ${formatValue(node.value, depth + 1)}`;
   });
 
   return lines;
