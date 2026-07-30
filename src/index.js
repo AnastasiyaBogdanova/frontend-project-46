@@ -27,7 +27,6 @@ function buildDiff(obj1, obj2) {
     if (!hasKey2) {
       return { key, type: 'removed', value: value1 };
     }
-    // Важно: проверяем что оба значения - объекты и не null
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return { key, type: 'nested', children: buildDiff(value1, value2) };
     }

@@ -2,51 +2,57 @@ import _ from 'lodash';
 
 const getIndent = (depth) => ' '.repeat(depth * 4);
 
-const stringify = (value, depth) => {
-  if (!_.isPlainObject(value)) {
-    if (value === null) return 'null';
-    if (typeof value === 'string') return value;
-    return String(value);
+const formatValue = (value, depth = 0) => {
+  if (value === null) return 'null';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'boolean') return String(value);
+
+  if (_.isPlainObject(value)) {
+    const indent = getIndent(depth);
+    const entries = Object.entries(value);
+    const parts = entries.map(([key, val]) => {
+      const formatted = _.isPlainObject(val) ? formatValue(val, depth + 1) : val;
+      return `${indent}    ${key}: ${formatted}`;
+    });
+    return `{\n${parts.join('\n')}\n${indent}}`;
   }
 
-  const indent = getIndent(depth + 1);
-  const lines = Object.entries(value).map(([key, val]) => {
-    const formattedVal = _.isPlainObject(val) ? stringify(val, depth + 1) : val;
-    return `${indent}    ${key}: ${formattedVal}`;
-  });
-  return `{\n${lines.join('\n')}\n${indent}}`;
+  return String(value);
 };
 
-export default function stylish(diff, depth = 0) {
+const renderLines = (diff, depth) => {
   const indent = getIndent(depth);
   const lines = diff.map((node) => {
     const { key, type } = node;
 
     if (type === 'nested') {
-      const children = stylish(node.children, depth + 1);
-      return `${indent}    ${key}: {\n${children}\n${indent}    }`;
+      const childrenLines = renderLines(node.children, depth + 1);
+      const childrenStr = childrenLines.join('\n');
+      return `${indent}    ${key}: {\n${childrenStr}\n${indent}    }`;
     }
 
     if (type === 'added') {
-      const value = stringify(node.value, depth);
-      return `${indent}  + ${key}: ${value}`;
+      return `${indent}  + ${key}: ${formatValue(node.value, depth)}`;
     }
 
     if (type === 'removed') {
-      const value = stringify(node.value, depth);
-      return `${indent}  - ${key}: ${value}`;
+      return `${indent}  - ${key}: ${formatValue(node.value, depth)}`;
     }
 
     if (type === 'changed') {
-      const oldValue = stringify(node.oldValue, depth);
-      const newValue = stringify(node.newValue, depth);
-      return `${indent}  - ${key}: ${oldValue}\n${indent}  + ${key}: ${newValue}`;
+      return `${indent}  - ${key}: ${formatValue(node.oldValue, depth)}\n${indent}  + ${key}: ${formatValue(node.newValue, depth)}`;
     }
 
     // unchanged
-    const value = stringify(node.value, depth);
-    return `${indent}    ${key}: ${value}`;
+    return `${indent}    ${key}: ${formatValue(node.value, depth)}`;
   });
 
+  return lines;
+};
+
+export default function stylish(diff, depth = 0) {
+  const lines = renderLines(diff, depth);
+  const indent = getIndent(depth);
   return `{\n${lines.join('\n')}\n${indent}}`;
 }
